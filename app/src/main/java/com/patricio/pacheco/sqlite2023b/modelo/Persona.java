@@ -27,7 +27,7 @@ public class Persona {
     }
 
     public static Cursor listaPersona(Context context){
-        String sql="select * from persona";
+        String sql="select _rowid_ as _id, * from persona";
         BaseSQLiteHelper sqLiteHelper= new BaseSQLiteHelper(context);
        return sqLiteHelper.getReadableDatabase().rawQuery(sql,null);
 

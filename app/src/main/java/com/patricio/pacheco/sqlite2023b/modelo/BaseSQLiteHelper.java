@@ -16,9 +16,22 @@ public class BaseSQLiteHelper  extends SQLiteOpenHelper {
         super(context, BASE, null, 3);
         miContexto=context;
         File archivoBD= miContexto.getDatabasePath(BASE);
-        copiarBD(archivoBD);//UNA SOLA VEZ
+        if(!existeBase(archivoBD.getAbsolutePath()))  copiarBD(archivoBD);//UNA SOLA VEZ
     }
+    private boolean existeBase(String ruta){
+        SQLiteDatabase siDB=null;
+        try {
+            siDB=SQLiteDatabase.openDatabase(ruta,null,SQLiteDatabase.OPEN_READONLY);
+            if (siDB != null) {
+                siDB.close();
+                return true;
+            }
+            return false;
+        }catch (Exception ex){
+            return false;
+        }
 
+    }
     private void copiarBD( File archivoDB){
         try {
             InputStream inputStream=miContexto.getAssets().open(BASE);
